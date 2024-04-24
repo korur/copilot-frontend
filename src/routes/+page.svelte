@@ -1,2 +1,14 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<!-- test meltui -->
+<script>
+	import { createCollapsible, melt } from '@melt-ui/svelte';
+
+	const {
+		elements: { root, content, trigger },
+		states: { open }
+	} = createCollapsible();
+</script>
+
+<div use:melt={$root}>
+	<button use:melt={$trigger}>{$open ? 'Close' : 'Open'}</button>
+	<div use:melt={$content}>Obi-Wan says: Hello there!</div>
+</div>
