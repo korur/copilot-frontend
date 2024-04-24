@@ -2,20 +2,20 @@
   import { Check } from 'lucide-svelte'
   import clsx from 'clsx'
   import Spinner from './Spinner.svelte'
+  import { getContext } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
-  export let uploaded: boolean
+  const medicalRecord: Writable<null | undefined | string> = getContext('medicalRecord')
+
   let inProgress: boolean
 
   const handleClick = () => {
     inProgress = true
     setTimeout(() => {
-      medicalRecord = undefined
+      medicalRecord.set('medical file uploaded...')
       inProgress = false
-      uploaded = true
     }, 3000)
   }
-
-  let medicalRecord: null | undefined = null
 </script>
 
 <div
@@ -24,11 +24,11 @@
   <button
     class={clsx(
       'text-white font-medium py-2 px-4 rounded border-2',
-      medicalRecord === null ? 'bg-blue-500 border-blue-500' : 'border-transparent text-green-600',
+      $medicalRecord === null ? 'bg-blue-500 border-blue-500' : 'border-transparent text-green-600',
     )}
     on:click={handleClick}
   >
-    {#if medicalRecord === null}
+    {#if $medicalRecord === null}
       <span class="pr-2">Simulate Medical Record Upload</span>
       {#if inProgress}
         <Spinner></Spinner>

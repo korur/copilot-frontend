@@ -1,21 +1,38 @@
 <script lang="ts">
   import GuidelinesUpload from '$lib/components/GuidelinesUpload.svelte'
   import MedicalRecordUpload from '$lib/components/MedicalRecordUpload.svelte'
-  const handleContinue = () => {
+
+  import { setContext } from 'svelte'
+  import { writable } from 'svelte/store'
+
+  const medicalRecord = writable(null)
+  const guidelinesFile = writable(null)
+
+  setContext('medicalRecord', medicalRecord)
+  setContext('guidelinesFile', guidelinesFile)
+
+  const handleContinue = async () => {
     // to be implemented
+    // make an api call to server
+    const res = await fetch('/api/cases', {
+      method: 'POST',
+      body: JSON.stringify({ test: 11 }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }
 
-  let medicalRecordReady: boolean
-  let guidelinesReady: boolean
+  $: console.log('logging in the parent', $medicalRecord, $guidelinesFile)
 </script>
 
 <div class="w-full flex flex-col justify-center items-center h-screen">
   <div class="w-full flex flex-row gap-2 items-center">
-    <MedicalRecordUpload bind:uploaded={medicalRecordReady} />
-    <GuidelinesUpload bind:uploaded={guidelinesReady} {medicalRecordReady} />
+    <MedicalRecordUpload />
+    <GuidelinesUpload />
   </div>
   <div class="w-full py-4 flex flex-row justify-center">
-    {#if medicalRecordReady && guidelinesReady}
+    {#if $medicalRecord && $guidelinesFile}
       <button
         class="bg-green-600 font-medium text-white py-2 px-4 rounded"
         on:click={handleContinue}

@@ -3,13 +3,16 @@
   import { Check } from 'lucide-svelte'
   import Spinner from './Spinner.svelte'
   import { addToast } from './toast/index.svelte'
-  export let uploaded
-  export let medicalRecordReady: boolean
+  import { getContext } from 'svelte'
+  import type { Writable } from 'svelte/store'
+
+  const guidelinesFile: Writable<null | undefined | string> = getContext('guidelinesFile')
+  const medicalRecord: Writable<null | undefined | string> = getContext('medicalRecord')
 
   let inProgress: boolean
 
   const handleClick = () => {
-    if (!medicalRecordReady) {
+    if (!$medicalRecord) {
       addToast({
         data: {
           type: 'error',
@@ -22,12 +25,10 @@
 
     inProgress = true
     setTimeout(() => {
-      guidelinesFile = undefined
+      guidelinesFile.set('guidelines uploaded...')
       inProgress = false
-      uploaded = true
     }, 3000)
   }
-  let guidelinesFile: null | undefined = null
 </script>
 
 <div
@@ -36,15 +37,15 @@
   <button
     class={classNames(
       'text-white font-medium py-2 px-4 rounded border-2',
-      guidelinesFile === null
-        ? !medicalRecordReady
+      $guidelinesFile === null
+        ? !$medicalRecord
           ? 'bg-gray-400 border-gray-400'
           : 'bg-orange-500 border-orange-500'
         : 'border-transparent text-green-600',
     )}
     on:click={handleClick}
   >
-    {#if guidelinesFile === null}
+    {#if $guidelinesFile === null}
       <span class="pr-2">Simulate Guidelines Upload</span>
       {#if inProgress}
         <Spinner></Spinner>
