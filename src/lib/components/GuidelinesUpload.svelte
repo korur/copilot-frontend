@@ -1,17 +1,33 @@
-<script>
+<script lang="ts">
   import { clsx as classNames } from 'clsx'
   import { Check } from 'lucide-svelte'
   import Spinner from './Spinner.svelte'
+  import { addToast } from './toast/index.svelte'
+  export let uploaded
+  export let medicalRecordReady: boolean
 
-  let uploading
+  let inProgress: boolean
+
   const handleClick = () => {
-    uploading = true
+    if (!medicalRecordReady) {
+      addToast({
+        data: {
+          type: 'error',
+          title: 'Success',
+          description: 'Please submit Medical Record first!',
+        },
+      })
+      return
+    }
+
+    inProgress = true
     setTimeout(() => {
       guidelinesFile = undefined
-      uploading = false
+      inProgress = false
+      uploaded = true
     }, 3000)
   }
-  let guidelinesFile = null
+  let guidelinesFile: null | undefined = null
 </script>
 
 <div
@@ -21,14 +37,16 @@
     class={classNames(
       'text-white font-medium py-2 px-4 rounded border-2',
       guidelinesFile === null
-        ? 'bg-orange-500 border-orange-500'
+        ? !medicalRecordReady
+          ? 'bg-gray-400 border-gray-400'
+          : 'bg-orange-500 border-orange-500'
         : 'border-transparent text-green-600',
     )}
     on:click={handleClick}
   >
     {#if guidelinesFile === null}
       <span class="pr-2">Simulate Guidelines Upload</span>
-      {#if uploading}
+      {#if inProgress}
         <Spinner></Spinner>
       {/if}
     {:else}

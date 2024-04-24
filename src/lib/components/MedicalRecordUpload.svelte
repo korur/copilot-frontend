@@ -1,19 +1,21 @@
-<script>
+<script lang="ts">
   import { Check } from 'lucide-svelte'
   import clsx from 'clsx'
   import Spinner from './Spinner.svelte'
 
-  let uploading
+  export let uploaded: boolean
+  let inProgress: boolean
 
   const handleClick = () => {
-    uploading = true
+    inProgress = true
     setTimeout(() => {
       medicalRecord = undefined
-      uploading = false
+      inProgress = false
+      uploaded = true
     }, 3000)
   }
 
-  let medicalRecord = null
+  let medicalRecord: null | undefined = null
 </script>
 
 <div
@@ -28,7 +30,7 @@
   >
     {#if medicalRecord === null}
       <span class="pr-2">Simulate Medical Record Upload</span>
-      {#if uploading}
+      {#if inProgress}
         <Spinner></Spinner>
       {/if}
     {:else}
