@@ -57,6 +57,7 @@ The project should be up and running at http://localhost:5173/
 3. Completion of Exercise 2
 4. Completion of Exercise 3
 5. Bonus point polling functionality
+6. A Short video of the demo https://www.youtube.com/watch?v=aNvUExEZ__M
 
 Initially the Database ( in-memory dictionary in the backend) is empty, New cases are created after "continue" button is clicked in the frontend starting with id 1,2... etc.
 
