@@ -1,38 +1,76 @@
-# create-svelte
+# Co-Pilot Experience for Prior Authorization
+
+This project implements a co-pilot experience for Prior Authorization.
+
+View instructions for completing this take-home assignment [here](https://co-helm.notion.site/Senior-Product-Engineer-Take-Home-6e82ec45cc2a46b59a0d9ee3aeb9449c).
+
+## Tech Stack
+
+Frontend: SvelteKit
+Backend: Python (FastAPI). ** Please start the backend first. **
+Database: In memory dictionary
+
+This repo contains the code for the take home assignment.
+
+- frontend
+
+```bash
+git clone git@github.com:korur/copilot-frontend.git
+```
+
+### Initially run the backend
+
+- backend (Python >3.9)
+
+```bash
+git clone git@github.com:korur/copilot-backend.git
+```
+
+then
+
+```bash
+docker build -t backend .
+docker run -d -p 8000:80 backend
+```
+
+### Requirements
+
+Node.js 18 and above
+
+### Running the app
+
+### Frontend
+
+Run the frontend:
+
+```bash
+npm install
+npm run dev
+```
+
+Ensure that you have node.js 18 or above.
+
+The project should be up and running at http://localhost:5173/
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Creating a project
+## Overview of the steps I have taken:
 
-If you're seeing this, you've probably already done this step. Congrats!
+1. Creation of Svelte equivalent of the react app
+2. Completion of Exercise 1
+3. Completion of Exercise 2
+4. Completion of Exercise 3
+5. Bonus point polling functionality
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Initially the Database ( in-memory dictionary in the backend) is empty, New cases are created after "continue" button is clicked in the frontend starting with id 1,2... etc.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- First follow the steps in the flow page to create a new case http://localhost:5173
+- The continue button will submit a post request to backend api to create new case
+- The app will take you to the results page.
+- At the results page e.g. htpp:localhost:5173/case/1 Data will gradually load passing through submitted, processing and complete steps, the app will handle those stages.
 
-## Developing
+## Backend API routes
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- localhost:8000/cases: shows all cases
+- localhost:8000/cases/1/details: shows single case details
+- localhost:8000/cases/1: shows case but only `id`, `created_at` and `status` fields.
