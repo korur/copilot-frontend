@@ -6,9 +6,9 @@ View instructions for completing this take-home assignment [here](https://co-hel
 
 ## Tech Stack
 
-Frontend: SvelteKit
-Backend: Python (FastAPI). ** Please start the backend first. **
-Database: In memory dictionary
+- Frontend: SvelteKit
+- Backend: Python (FastAPI). ** Please start the backend first. **
+  Database: In memory dictionary
 
 This repo contains the code for the take home assignment.
 
@@ -33,13 +33,11 @@ docker build -t backend .
 docker run -d -p 8000:80 backend
 ```
 
+### Running the frontend
+
 ### Requirements
 
 Node.js 18 and above
-
-### Running the app
-
-### Frontend
 
 Run the frontend:
 
@@ -51,8 +49,6 @@ npm run dev
 Ensure that you have node.js 18 or above.
 
 The project should be up and running at http://localhost:5173/
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
 ## Overview of the steps I have taken:
 
@@ -67,7 +63,7 @@ Initially the Database ( in-memory dictionary in the backend) is empty, New case
 - First follow the steps in the flow page to create a new case http://localhost:5173
 - The continue button will submit a post request to backend api to create new case
 - The app will take you to the results page.
-- At the results page e.g. htpp:localhost:5173/case/1 Data will gradually load passing through submitted, processing and complete steps, the app will handle those stages.
+- At the results page e.g. http:localhost:5173/case/1 Data will gradually load passing through `submitted`, `processing` and `complete` steps, the app will handle those stages.
 
 ## Backend API routes
 
