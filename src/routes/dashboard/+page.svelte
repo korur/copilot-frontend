@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import GuidelinesUpload from '$lib/components/GuidelinesUpload.svelte'
   import MedicalRecordUpload from '$lib/components/MedicalRecordUpload.svelte'
 
@@ -14,16 +15,21 @@
   const handleContinue = async () => {
     // to be implemented
     // make an api call to server
-    const res = await fetch('/api/cases', {
+    const res = await fetch('http://localhost:8000/cases/', {
       method: 'POST',
-      body: JSON.stringify({ test: 11 }),
+      body: JSON.stringify({ id: 4 }),
       headers: {
         'Content-Type': 'application/json',
       },
     })
-  }
+    console.log('post request status', res.status)
 
-  $: console.log('logging in the parent', $medicalRecord, $guidelinesFile)
+    if (res.status === 200) {
+      const result = await res.json()
+      console.log('reeee', result.id)
+      goto(`/dashboard/case/${result.id}`)
+    }
+  }
 </script>
 
 <div class="w-full flex flex-col justify-center items-center h-screen">
